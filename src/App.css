@@ -1,11 +1,11 @@
 :root {
-  --taskbar-height: 35px;
+  --taskbar-height: 40px;
 }
 
 #desktop {
   height: 100%;
   background-image: url("assets/bliss.jpeg");
-  background-position: 50% 50%;
+  background-position: 50% 55%;
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover; 
 
@@ -19,7 +19,7 @@
   bottom: 0;
   background-color: #245ddb;
   min-height: var(--taskbar-height);
-  z-index: 1;
+  z-index: 0;
   width: 90%;
   /* box-shadow: inset 0px 10px ; */
   /* box-shadow: inset 0px 15px 10px -10px #3786e7; */
@@ -33,8 +33,15 @@
   right: 0;
   background-color: #0e8ce8;
   min-height: var(--taskbar-height);
-  z-index: 1;
+  z-index: 0;
   width: 10%;
 
   box-shadow: inset 0px 7px 5px -5px #15a7ed /* Top shadow */, inset 0px -12px 5px -8px #1487dc /* Bottom shadow */; 
+}
+
+.icon {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
 }

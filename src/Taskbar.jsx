@@ -1,21 +1,21 @@
 export default function Taskbar({ id }) {
     return (
         <div id={id} className="display: flex; flex-direction: row;">
-            <TaskbarAppsSection />
-            <TaskbarTimeSection />
+            <TaskbarMain />
+            <TaskbarClock />
         </div>
     );
 }
 
 
 
-function TaskbarAppsSection() {
+function TaskbarMain() {
     return (
         <div id="main-taskbar"></div>
     );
 }
 
-function TaskbarTimeSection() {
+function TaskbarClock() {
     return (
         <div id="time-taskbar"></div>
     );
