@@ -1,10 +1,15 @@
-import Icon from "./Icon";
-import peter from "./assets/peter.png"
+import { useState } from "react";
+import { DesktopIcon } from "./Icon";
+import computerIcon from "./assets/Computer-with-programs.ico";
+import agentIcon from "./assets/Agent.ico";
 
 export default function Desktop({ id }) {
     return (
         <div id={id}>
-            <Icon imageUrl={peter} width="80px" height="100px" />
+            <div id="desktop-icon-grid">
+                <DesktopIcon imageUrl={computerIcon} width="55px" height="60px" />
+                <DesktopIcon imageUrl={agentIcon} width="55px" height="60px" />
+            </div>
         </div>
     );
 }

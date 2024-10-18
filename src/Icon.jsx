@@ -29,6 +29,15 @@ class DragObject {
 
 export default function Icon({ imageUrl, width, height }) {
     const [icon, setIcon] = useState(new IconObject(imageUrl, width, height));
+
+    return (
+        <div className="icon" draggable={false}>
+            <img className="icon-img" src={icon.imageUrl} height={icon.height} width={icon.width} draggable={false} />
+        </div>
+    );
+}
+
+export function DesktopIcon({ imageUrl, width, height }) {
     const [drag, setDrag] = useState(new DragObject());
     const [position, setPosition] = useState({top: 0, left: 0})
 
@@ -56,52 +65,15 @@ export default function Icon({ imageUrl, width, height }) {
         setDrag(new DragObject());
     }
 
-
-
     return (
-        <div className="icon"
+        <div className="desktop-icon"
             style={{top: position.top, left: position.left}}
             onDragEnd={(e) => handleDragEnd(e)} 
             onDragStart={(e) => handleDrag(e)}
+            draggable={true}
         >
-            <img className="icon-img" src={icon.imageUrl} height={icon.height} width={icon.width} />
+            <Icon imageUrl={imageUrl} width={width} height={height} />
+            <p className="desktop-icon-text" >Icon info here!</p>
         </div>
     );
 }
-
-
-// const container = document.querySelector(".container");
-// function onMouseDrag({ movementX, movementY }) {
-//     let getContainerStyle = window.getComputedStyle(container);
-//     let leftValue = parseInt(getContainerStyle.left);
-//     let topValue = parseInt(getContainerStyle.top);
-//     container.style.left = `${leftValue + movementX}px`;
-//     container.style.top = `${topValue + movementY}px`;
-// }
-// container.addEventListener("mousedown", () => {
-//     container.addEventListener("mousemove", onMouseDrag);
-// });
-// document.addEventListener("mouseup", () => {
-//     container.removeEventListener("mousemove", onMouseDrag);
-// });
-
-
-// function DesktopIcon({ imageUrl, width, height }) {
-//     const [icon, setIcon] = useState(new IconObject(imageUrl, width, height));
-
-//     return (
-//         <div className="desktop-icon">
-//             <img className="desktop-icon-img" src={icon.imageUrl} height={icon.height} width={icon.width} />
-//         </div>
-//     );
-// }
-
-// function TaskbarIcon({ imageUrl, width, height }) {
-//     const [icon, setIcon] = useState(new IconObject(imageUrl, width, height));
-
-//     return (
-//         <div className="taskbar-icon">
-//             <img className="taskbar-icon-img" src={icon.imageUrl} height={icon.height} width={icon.width} />
-//         </div>
-//     );
-// }
