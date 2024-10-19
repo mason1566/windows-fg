@@ -66,14 +66,15 @@ export function DesktopIcon({ imageUrl, width, height }) {
     }
 
     return (
-        <div className="desktop-icon"
+        <a className="desktop-icon"
             style={{top: position.top, left: position.left}}
             onDragEnd={(e) => handleDragEnd(e)} 
             onDragStart={(e) => handleDrag(e)}
             draggable={true}
+            tabIndex={0}
         >
             <Icon imageUrl={imageUrl} width={width} height={height} />
             <p className="desktop-icon-text" >Icon info here!</p>
-        </div>
+        </a>
     );
 }
