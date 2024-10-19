@@ -42,12 +42,13 @@ export function DesktopIcon({ imageUrl, width, height }) {
     const [position, setPosition] = useState({top: 0, left: 0})
 
 
-    function handleDrag(event) {
+    function handleDragStart(event) {
         // console.log(event);
         let newDrag = new DragObject();
         newDrag.dragStart = { x: event.clientX, y: event.clientY };
         setDrag(newDrag);
         // console.log(drag);
+        // event.dataTransfer.dropEffect = "move";
     }
 
     function handleDragEnd(event) {
@@ -65,16 +66,21 @@ export function DesktopIcon({ imageUrl, width, height }) {
         setDrag(new DragObject());
     }
 
+    function handleDoubleClick(event) {
+        alert("Double click!");
+    }
+
     return (
-        <a className="desktop-icon"
+        <div className="desktop-icon"
             style={{top: position.top, left: position.left}}
             onDragEnd={(e) => handleDragEnd(e)} 
-            onDragStart={(e) => handleDrag(e)}
+            onDragStart={(e) => handleDragStart(e)}
             draggable={true}
             tabIndex={0}
+            onDoubleClick={(e) => handleDoubleClick(e)}
         >
             <Icon imageUrl={imageUrl} width={width} height={height} />
             <p className="desktop-icon-text" >Icon info here!</p>
-        </a>
+        </div>
     );
 }
