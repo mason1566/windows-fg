@@ -1,0 +1,30 @@
+:root {
+    --taskbar-height: 40px;
+}
+
+/* #taskbar {} */
+
+#main-taskbar {
+  position: absolute;
+  bottom: 0;
+  background-color: #245ddb;
+  min-height: var(--taskbar-height);
+  z-index: 0;
+  width: 90%;
+  /* box-shadow: inset 0px 10px ; */
+  /* box-shadow: inset 0px 15px 10px -10px #3786e7; */
+  box-shadow: inset 0px 12px 5px -8px #3786e7 /* Top shadow */, inset 0px -12px 5px -8px #153f9d /* Bottom shadow */; 
+
+}
+
+#time-taskbar {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #0e8ce8;
+  min-height: var(--taskbar-height);
+  z-index: 0;
+  width: 10%;
+
+  box-shadow: inset 0px 7px 5px -5px #15a7ed /* Top shadow */, inset 0px -12px 5px -8px #1487dc /* Bottom shadow */; 
+}

@@ -1,0 +1,40 @@
+.icon {
+  z-index: 1;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.icon-img {
+  margin-top: 5px;
+}
+
+.desktop-icon {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 7px;
+  /* background-color: ; */
+  border: 0;
+}
+
+.desktop-icon:hover {
+
+  background-color: rgba(255, 255, 255, 15%);
+}
+
+.desktop-icon:focus {
+  border: 2px dashed rgba(0, 0, 0, 25%);
+  border-radius: 5%;
+  margin:5px;
+}
+
+.desktop-icon-text {
+  text-align: center;
+  user-select: none;
+  font-size: 0.75em;
+  margin: 3px;
+  margin-top: 7px;
+}

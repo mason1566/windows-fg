@@ -1,4 +1,5 @@
 import { useState } from "react";
+import './icon.css';
 
 class IconObject {
     imageUrl = "";
@@ -60,7 +61,7 @@ export function DesktopIcon({ imageUrl, width, height, children, top = 0, left =
         let dragCalculation = newDrag.getDrag();
         let newPosition = {top: dragCalculation.y + position.top, left: dragCalculation.x + position.left};
         setPosition(newPosition);
-        // console.log(newPosition)
+        console.log(newPosition)
 
         // reset the drag
         setDrag(new DragObject());

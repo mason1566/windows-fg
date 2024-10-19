@@ -1,6 +1,8 @@
-export default function Taskbar({ id }) {
+import './taskbar.css';
+
+export default function Taskbar() {
     return (
-        <div id={id} className="display: flex; flex-direction: row;">
+        <div id="taskbar" className="display: flex; flex-direction: row;">
             <TaskbarMain />
             <TaskbarClock />
         </div>
