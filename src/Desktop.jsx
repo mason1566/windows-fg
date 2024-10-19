@@ -7,8 +7,8 @@ export default function Desktop({ id }) {
     return (
         <div id={id}>
             <div id="desktop-icon-grid">
-                <DesktopIcon imageUrl={computerIcon} width="55px" height="60px" />
-                <DesktopIcon imageUrl={agentIcon} width="55px" height="60px" />
+                <DesktopIcon imageUrl={computerIcon} width="50px" height="auto" />
+                <DesktopIcon imageUrl={agentIcon} width="50px" height="auto" />
             </div>
         </div>
     );
