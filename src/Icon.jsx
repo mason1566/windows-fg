@@ -37,9 +37,9 @@ export default function Icon({ imageUrl, width, height }) {
     );
 }
 
-export function DesktopIcon({ imageUrl, width, height }) {
+export function DesktopIcon({ imageUrl, width, height, children, top = 0, left = 0 }) {
     const [drag, setDrag] = useState(new DragObject());
-    const [position, setPosition] = useState({top: 0, left: 0})
+    const [position, setPosition] = useState({top: top, left: left});
 
 
     function handleDragStart(event) {
@@ -60,7 +60,7 @@ export function DesktopIcon({ imageUrl, width, height }) {
         let dragCalculation = newDrag.getDrag();
         let newPosition = {top: dragCalculation.y + position.top, left: dragCalculation.x + position.left};
         setPosition(newPosition);
-        console.log(newPosition)
+        // console.log(newPosition)
 
         // reset the drag
         setDrag(new DragObject());
@@ -80,7 +80,7 @@ export function DesktopIcon({ imageUrl, width, height }) {
             onDoubleClick={(e) => handleDoubleClick(e)}
         >
             <Icon imageUrl={imageUrl} width={width} height={height} />
-            <p className="desktop-icon-text" >Icon info here!</p>
+            <p className="desktop-icon-text" >{children}</p>
         </div>
     );
 }
