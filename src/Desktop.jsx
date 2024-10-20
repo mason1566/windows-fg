@@ -11,7 +11,7 @@ export default function Desktop() {
             <div id="desktop-icon-grid">
                 <DesktopIcon imageUrl={computerIcon} width="50px" height="auto" >Hello!</DesktopIcon>
                 <DesktopIcon imageUrl={agentIcon} width="50px" height="auto" >Click Here!</DesktopIcon>
-                <DesktopIcon imageUrl={webpageIcon} width="50px" height="auto" ><strong>Shop Now</strong></DesktopIcon>
+                <DesktopIcon imageUrl={webpageIcon} width="50px" height="auto" className="shop-icon" ><strong>Shop Now</strong></DesktopIcon>
             </div>
         </div>
     );

@@ -38,7 +38,7 @@ export default function Icon({ imageUrl, width, height }) {
     );
 }
 
-export function DesktopIcon({ imageUrl, width, height, children, top = 0, left = 0 }) {
+export function DesktopIcon({ imageUrl, width, height, children, top = 0, left = 0, className = "" }) {
     const [drag, setDrag] = useState(new DragObject());
     const [position, setPosition] = useState({top: top, left: left});
 
@@ -46,7 +46,7 @@ export function DesktopIcon({ imageUrl, width, height, children, top = 0, left =
     function handleDragStart(event) {
         // console.log(event);
         let newDrag = new DragObject();
-        newDrag.dragStart = { x: event.clientX, y: event.clientY };
+        newDrag.dragStart = { x: position.top, y: position.left };
         setDrag(newDrag);
         // console.log(drag);
         // event.dataTransfer.dropEffect = "move";
@@ -72,7 +72,7 @@ export function DesktopIcon({ imageUrl, width, height, children, top = 0, left =
     }
 
     return (
-        <div className="desktop-icon"
+        <div className={ className + " desktop-icon" }
             style={{top: position.top, left: position.left}}
             onDragEnd={(e) => handleDragEnd(e)} 
             onDragStart={(e) => handleDragStart(e)}
