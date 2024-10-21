@@ -14,7 +14,7 @@ export default function DesktopIconManager({ children }) {
     return (
         <div id="desktop-icon-grid" ref={iconGrid}>
             { children }
-            { shopIcon }
+            {/* { shopIcon } */}
         </div>
     );
 }

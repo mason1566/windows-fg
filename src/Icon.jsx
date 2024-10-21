@@ -38,34 +38,7 @@ export default function Icon({ imageUrl, width, height }) {
     );
 }
 
-export function DesktopIcon({ imageUrl, width, height, children, top = 0, left = 0, className = "" }) {
-    const [drag, setDrag] = useState(new DragObject());
-    const [position, setPosition] = useState({top: top, left: left});
-
-
-    function handleDragStart(event) {
-        // console.log(event);
-        let newDrag = new DragObject();
-        newDrag.dragStart = { x: position.top, y: position.left };
-        setDrag(newDrag);
-        // console.log(drag);
-        // event.dataTransfer.dropEffect = "move";
-    }
-
-    function handleDragEnd(event) {
-        // console.log(event);
-        let newDrag = new DragObject();
-        newDrag.dragStart = drag.dragStart;
-        newDrag.dragEnd = { x: event.clientX, y: event.clientY };
-
-        let dragCalculation = newDrag.getDrag();
-        let newPosition = {top: dragCalculation.y + position.top, left: dragCalculation.x + position.left};
-        setPosition(newPosition);
-        console.log(newPosition)
-
-        // reset the drag
-        setDrag(new DragObject());
-    }
+export function DesktopIcon({ imageUrl, width, height, children, className = "" }) {
 
     function handleDoubleClick(event) {
         alert("Double click!");
@@ -73,9 +46,6 @@ export function DesktopIcon({ imageUrl, width, height, children, top = 0, left =
 
     return (
         <div className={ className + " desktop-icon" }
-            style={{top: position.top, left: position.left}}
-            onDragEnd={(e) => handleDragEnd(e)} 
-            onDragStart={(e) => handleDragStart(e)}
             draggable={true}
             tabIndex={0}
             onDoubleClick={(e) => handleDoubleClick(e)}
@@ -84,4 +54,9 @@ export function DesktopIcon({ imageUrl, width, height, children, top = 0, left =
             <p className="desktop-icon-text" >{children}</p>
         </div>
     );
+}
+
+// an IconDropZone component is swapped with a DesktopIcon when the DesktopIcon is dropped in the zone.
+export function IconDropZone() {
+
 }
