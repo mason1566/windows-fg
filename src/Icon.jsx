@@ -23,7 +23,7 @@ export default function Icon({ imageUrl, width, height }) {
     );
 }
 
-export function DesktopIcon({ imageUrl, width, height, children, className = "" }) {
+export function DesktopIcon({ imageUrl, width, height, children, className = "", style = {} }) {
 
     function handleDoubleClick(event) {
         alert("Double click!");
@@ -32,28 +32,6 @@ export function DesktopIcon({ imageUrl, width, height, children, className = "" 
     return (
         <div
             
-            className={ "desktop-icon " + className }
-            draggable={true}
-            tabIndex={0}
-            onDoubleClick={(e) => handleDoubleClick(e)}
-        >
-            <Icon imageUrl={imageUrl} width={width} height={height} />
-            <p className="desktop-icon-text" >{children}</p>
-        </div>
-    );
-}
-
-export function PositionableDesktopIcon ({ id, imageUrl, width, height, children, className = "", style = {} }) {
-
-    function handleDoubleClick(event) {
-        alert("Double click!");
-    }
-
-
-
-    return (
-        <div
-            id={id}
             className={ "desktop-icon " + className }
             draggable={true}
             tabIndex={0}

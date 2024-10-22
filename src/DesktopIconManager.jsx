@@ -1,6 +1,6 @@
 import './desktop-icon-manager.css';
 import { useRef, useState, useEffect } from 'react';
-import { DesktopIcon, PositionableDesktopIcon, IconDropZone } from "./Icon";
+import { DesktopIcon, IconDropZone } from "./Icon";
 import webpageIcon from "./assets/icons/Turn-Off-Computer-(full).ico";
 
 function getViewportWidth() {
@@ -46,7 +46,7 @@ export default function DesktopIconManager({ children }) {
     return (
         <div id="desktop-icon-grid" ref={iconGrid}>
             { children }
-            <PositionableDesktopIcon id="shop-icon" imageUrl={webpageIcon} width="50px" height="auto" style={{gridRow: middleRow+1, gridColumn: middleColumn+1}} ><strong>Shop Now</strong></PositionableDesktopIcon>
+            <DesktopIcon imageUrl={webpageIcon} width="50px" height="auto" style={{gridRow: middleRow+1, gridColumn: middleColumn+1}} ><strong>Shop Now</strong></DesktopIcon>
         </div>
     );
 }
