@@ -13,21 +13,6 @@ class IconObject {
     }
 }
 
-class DragObject {
-    dragStart = { x: null, y: null };
-    dragEnd = { x: null, y: null };
-
-    getDrag() {
-        if (this.dragStart.x === null || this.dragStart.y === null || this.dragEnd.x === null || this.dragEnd.y === null) {
-            throw new Error("DragObject.getDrag: Both drag points must be defined");
-        }
-
-        let newX = this.dragEnd.x - this.dragStart.x;
-        let newY = this.dragEnd.y - this.dragStart.y;
-        return {x: newX, y: newY};
-    }
-}
-
 export default function Icon({ imageUrl, width, height }) {
     const [icon, setIcon] = useState(new IconObject(imageUrl, width, height));
 
@@ -45,7 +30,9 @@ export function DesktopIcon({ imageUrl, width, height, children, className = "" 
     }
 
     return (
-        <div className={ className + " desktop-icon" }
+        <div
+            
+            className={ "desktop-icon " + className }
             draggable={true}
             tabIndex={0}
             onDoubleClick={(e) => handleDoubleClick(e)}
@@ -56,7 +43,32 @@ export function DesktopIcon({ imageUrl, width, height, children, className = "" 
     );
 }
 
+export function PositionableDesktopIcon ({ id, imageUrl, width, height, children, className = "", style = {} }) {
+
+    function handleDoubleClick(event) {
+        alert("Double click!");
+    }
+
+
+
+    return (
+        <div
+            id={id}
+            className={ "desktop-icon " + className }
+            draggable={true}
+            tabIndex={0}
+            onDoubleClick={(e) => handleDoubleClick(e)}
+            style={style}
+        >
+            <Icon imageUrl={imageUrl} width={width} height={height} />
+            <p className="desktop-icon-text" >{children}</p>
+        </div>
+    );
+}
+
 // an IconDropZone component is swapped with a DesktopIcon when the DesktopIcon is dropped in the zone.
 export function IconDropZone() {
-
+        return (
+            <div className="icon-drop-zone" draggable={false}></div>
+        );
 }
