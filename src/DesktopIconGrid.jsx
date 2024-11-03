@@ -1,6 +1,6 @@
 import './desktop-icon-grid.css';
 import { useRef, useState, useEffect } from 'react';
-import { DesktopIcon, IconDropZone } from "./Icon";
+import { DesktopIcon, DesktopIconSlot } from "./Icon";
 import webpageIcon from "./assets/icons/Turn-Off-Computer-(full).ico";
 
 function getViewportWidth() {
@@ -23,19 +23,19 @@ export default function DesktopIconGrid({ children }) {
 
     // Get the dynamic count of columns in the Desktop icon grid
     function getGridColumnCount() {
+        const gridStyle = window.getComputedStyle(iconGrid.current);
         return gridStyle.getPropertyValue('grid-template-columns').split(' ').length; 
     }
 
     // Get the dynamic count of rows in the Desktop icon grid
     function getGridRowCount() {
+        const gridStyle = window.getComputedStyle(iconGrid.current);
         return gridStyle.getPropertyValue('grid-template-rows').split(' ').length;
     }
 
     useEffect(() => {
         const updateGridDimensions = () => {
             if (iconGrid.current) {
-                const gridStyle = window.getComputedStyle(iconGrid.current);
-                
                 setColumnCount(getGridColumnCount());
                  
                 setRowCount(getGridRowCount());

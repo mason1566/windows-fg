@@ -45,7 +45,7 @@ export function DesktopIcon({ imageUrl, width, height, children, className = "",
 }
 
 // an IconDropZone component is swapped with a DesktopIcon when the DesktopIcon is dropped in the zone.
-export function IconDropZone() {
+export function DesktopIconSlot() {
         return (
             <div className="icon-drop-zone" draggable={false}></div>
         );
