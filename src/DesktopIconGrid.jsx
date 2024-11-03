@@ -11,10 +11,11 @@ function getViewportHeight() {
     return window.innerHeight;
 }
 
-export default function DesktopIconGrid({ children }) {
+export default function DesktopIconGrid({ children = null }) {
     // let shopIcon = <DesktopIcon imageUrl={webpageIcon} width="50px" height="auto" className="shop-icon" style={} ><strong>Shop Now</strong></DesktopIcon>;
     const iconGridRef = useRef(null);
 
+    const [icons, setIcons] = useState(children);
     const [columnCount, setColumnCount] = useState(0);
     const [rowCount, setRowCount] = useState(0);
     const [middleIconSlot, setMiddleIconSlot] = useState(null);
@@ -31,6 +32,24 @@ export default function DesktopIconGrid({ children }) {
     function getGridRowCount() {
         const gridStyle = window.getComputedStyle(iconGridRef.current);
         return gridStyle.getPropertyValue('grid-template-rows').split(' ').length;
+    }
+
+    function getIconGrid() {
+        let iconGrid = []; // This will temporarily hold our icons at our desired positions
+        for (let row = 0; row < rowCount; row++) {
+            for (let col = 0; col < columnCount; col++) {
+                if (row == 0 && col < icons.length) {
+                    iconGrid.push(icons[col])
+                }
+                else if (row == getCenter(rowCount) && col == getCenter(columnCount)) {
+                    iconGrid.push(shopIcon) // Place the shop icon at the center
+                }
+                else {
+                    iconGrid.push(null)
+                }
+            }
+        }
+        return iconGrid;
     }
 
     // Use useEffect hook to interact with our dynamically created icon grid
@@ -50,8 +69,9 @@ export default function DesktopIconGrid({ children }) {
 
     return (
         <div id="desktop-icon-grid" ref={iconGridRef}>
-            { children }
-            
+            { getIconGrid().map((icon, index) => (
+                (icon && <DesktopIconSlot index={index} >icon</DesktopIconSlot>) || <DesktopIconSlot index={index} />
+            ))}
         </div>
     );
 }
