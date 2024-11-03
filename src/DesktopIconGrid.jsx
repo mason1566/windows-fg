@@ -1,4 +1,4 @@
-import './desktop-icon-manager.css';
+import './desktop-icon-grid.css';
 import { useRef, useState, useEffect } from 'react';
 import { DesktopIcon, IconDropZone } from "./Icon";
 import webpageIcon from "./assets/icons/Turn-Off-Computer-(full).ico";
@@ -11,29 +11,34 @@ function getViewportHeight() {
     return window.innerHeight;
 }
 
-export default function DesktopIconManager({ children }) {
+export default function DesktopIconGrid({ children }) {
     // let shopIcon = <DesktopIcon imageUrl={webpageIcon} width="50px" height="auto" className="shop-icon" style={} ><strong>Shop Now</strong></DesktopIcon>;
     const iconGrid = useRef(null);
 
     const [columnCount, setColumnCount] = useState(0);
     const [rowCount, setRowCount] = useState(0);
-    const [middleRow, setMiddleRow] = useState(0);
-    const [middleColumn, setMiddleColumn] = useState(0);
+    const [middleIconSlot, setMiddleIconSlot] = useState(null);
+
+    const shopIcon = <DesktopIcon imageUrl={webpageIcon} width="50px" height="auto" ><strong>Shop Now</strong></DesktopIcon>;
+
+    // Get the dynamic count of columns in the Desktop icon grid
+    function getGridColumnCount() {
+        return gridStyle.getPropertyValue('grid-template-columns').split(' ').length; 
+    }
+
+    // Get the dynamic count of rows in the Desktop icon grid
+    function getGridRowCount() {
+        return gridStyle.getPropertyValue('grid-template-rows').split(' ').length;
+    }
 
     useEffect(() => {
         const updateGridDimensions = () => {
             if (iconGrid.current) {
                 const gridStyle = window.getComputedStyle(iconGrid.current);
                 
-                const columnCount = gridStyle.getPropertyValue('grid-template-columns').split(' ').length; 
-                setColumnCount(columnCount);
-
-                const rowCount = gridStyle.getPropertyValue('grid-template-rows').split(' ').length; 
-                setRowCount(rowCount);
-
-                // Calculate middle row and column
-                setMiddleRow(Math.floor(rowCount / 2));
-                setMiddleColumn(Math.floor(columnCount / 2));
+                setColumnCount(getGridColumnCount());
+                 
+                setRowCount(getGridRowCount());
             }
         };
 
@@ -46,7 +51,7 @@ export default function DesktopIconManager({ children }) {
     return (
         <div id="desktop-icon-grid" ref={iconGrid}>
             { children }
-            <DesktopIcon imageUrl={webpageIcon} width="50px" height="auto" style={{gridRow: middleRow+1, gridColumn: middleColumn+1}} ><strong>Shop Now</strong></DesktopIcon>
+            
         </div>
     );
 }
