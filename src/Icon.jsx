@@ -45,8 +45,8 @@ export function DesktopIcon({ imageUrl, width, height, children, className = "",
 }
 
 // a DesktopIconSlot component is swapped with a DesktopIcon when the DesktopIcon is dropped in the zone.
-export function DesktopIconSlot({ index }) {
+export function DesktopIconSlot({ index, children }) {
         return (
-            <div key={index} className="desktop-icon-slot" draggable={false}></div>
+            <div key={index} className="desktop-icon-slot" draggable={false}>{children}</div>
         );
 }

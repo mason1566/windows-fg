@@ -3,12 +3,28 @@ import { useRef, useState, useEffect } from 'react';
 import { DesktopIcon, DesktopIconSlot } from "./Icon";
 import webpageIcon from "./assets/icons/Turn-Off-Computer-(full).ico";
 
-function getViewportWidth() {
-    return window.innerWidth;
+function getIconWidthPx() {
+    const rootStyles = getComputedStyle(document.documentElement);
+    const colPx = rootStyles.getPropertyValue('--grid-column-px');
+    return parseInt(colPx.substr(0, colPx.length-2)) + getGapPx();
 }
 
-function getViewportHeight() {
-    return window.innerHeight;
+function getIconHeightPx() {
+    const rootStyles = getComputedStyle(document.documentElement);
+    const rowPx =  rootStyles.getPropertyValue('--grid-row-px');
+    return parseInt(rowPx.substr(0, rowPx.length-2)) + getGapPx();
+}
+
+function getGapPx() {
+    const iconGridStyles = getComputedStyle(document.getElementById("desktop-icon-grid"));
+    const gapPx =  iconGridStyles.getPropertyValue('gap');
+    return parseInt(gapPx.substr(0, gapPx.length-2));
+}
+
+function getTaskbarHeightPx() {
+    const rootStyles = getComputedStyle(document.documentElement);
+    const taskbarHeight =  rootStyles.getPropertyValue('--taskbar-height');
+    return parseInt(taskbarHeight.substr(0, taskbarHeight.length-2));
 }
 
 export default function DesktopIconGrid({ children = null }) {
@@ -18,38 +34,36 @@ export default function DesktopIconGrid({ children = null }) {
     const [icons, setIcons] = useState(children);
     const [columnCount, setColumnCount] = useState(0);
     const [rowCount, setRowCount] = useState(0);
-    const [middleIconSlot, setMiddleIconSlot] = useState(null);
+    const [middleIconSlot, setMiddleIconIndex] = useState(null);
 
     const shopIcon = <DesktopIcon imageUrl={webpageIcon} width="50px" height="auto" ><strong>Shop Now</strong></DesktopIcon>;
 
     // Get the dynamic count of columns in the Desktop icon grid
     function getGridColumnCount() {
-        const gridStyle = window.getComputedStyle(iconGridRef.current);
-        return gridStyle.getPropertyValue('grid-template-columns').split(' ').length; 
+        return Math.floor(window.innerWidth / getIconWidthPx());
     }
 
     // Get the dynamic count of rows in the Desktop icon grid
     function getGridRowCount() {
-        const gridStyle = window.getComputedStyle(iconGridRef.current);
-        return gridStyle.getPropertyValue('grid-template-rows').split(' ').length;
+        return Math.floor((window.innerHeight - getTaskbarHeightPx()) / getIconHeightPx());
     }
 
     function getIconGrid() {
-        let iconGrid = []; // This will temporarily hold our icons at our desired positions
+        let tempIconGrid = []; // This will temporarily hold our icons at our desired positions
         for (let row = 0; row < rowCount; row++) {
             for (let col = 0; col < columnCount; col++) {
                 if (row == 0 && col < icons.length) {
-                    iconGrid.push(icons[col])
+                    tempIconGrid.push(icons[col])
                 }
                 else if (row == getCenter(rowCount) && col == getCenter(columnCount)) {
-                    iconGrid.push(shopIcon) // Place the shop icon at the center
+                    tempIconGrid.push(shopIcon) // Place the shop icon at the center
                 }
                 else {
-                    iconGrid.push(null)
+                    tempIconGrid.push(null)
                 }
             }
         }
-        return iconGrid;
+        return tempIconGrid;
     }
 
     // Use useEffect hook to interact with our dynamically created icon grid
@@ -70,7 +84,7 @@ export default function DesktopIconGrid({ children = null }) {
     return (
         <div id="desktop-icon-grid" ref={iconGridRef}>
             { getIconGrid().map((icon, index) => (
-                (icon && <DesktopIconSlot index={index} >icon</DesktopIconSlot>) || <DesktopIconSlot index={index} />
+                (icon && <DesktopIconSlot index={index} >{icon}</DesktopIconSlot>) || <DesktopIconSlot index={index} />
             ))}
         </div>
     );
