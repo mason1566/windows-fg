@@ -1,6 +1,6 @@
 import './desktop-icon-grid.css';
 import { useRef, useState, useEffect } from 'react';
-import { DesktopIcon, DesktopIconSlot } from "./Icon";
+import { DesktopIcon } from "./Icon";
 import webpageIcon from "./assets/icons/Turn-Off-Computer-(full).ico";
 
 function getIconWidthPx() {
@@ -27,16 +27,18 @@ function getTaskbarHeightPx() {
     return parseInt(taskbarHeight.substr(0, taskbarHeight.length-2));
 }
 
+// Manages the display and functions of the Desktop and icons
+// Children are expected to be a DesktopIcon component
 export default function DesktopIconGrid({ children = null }) {
     // let shopIcon = <DesktopIcon imageUrl={webpageIcon} width="50px" height="auto" className="shop-icon" style={} ><strong>Shop Now</strong></DesktopIcon>;
     const iconGridRef = useRef(null);
 
-    const [icons, setIcons] = useState(children);
+    const [iconGrid, setIconGrid] = useState([]);
     const [columnCount, setColumnCount] = useState(0);
     const [rowCount, setRowCount] = useState(0);
     const [middleIconSlot, setMiddleIconIndex] = useState(null);
 
-    const shopIcon = <DesktopIcon imageUrl={webpageIcon} width="50px" height="auto" ><strong>Shop Now</strong></DesktopIcon>;
+    const shopIcon = <DesktopIcon id="shopIcon" imageUrl={webpageIcon} width="50px" height="auto" ><strong>Shop Now</strong></DesktopIcon>;
 
     // Get the dynamic count of columns in the Desktop icon grid
     function getGridColumnCount() {
@@ -52,8 +54,8 @@ export default function DesktopIconGrid({ children = null }) {
         let tempIconGrid = []; // This will temporarily hold our icons at our desired positions
         for (let row = 0; row < rowCount; row++) {
             for (let col = 0; col < columnCount; col++) {
-                if (row == 0 && col < icons.length) {
-                    tempIconGrid.push(icons[col])
+                if (row == 0 && col < children.length) {
+                    tempIconGrid.push(children[col])
                 }
                 else if (row == getCenter(rowCount) && col == getCenter(columnCount)) {
                     tempIconGrid.push(shopIcon) // Place the shop icon at the center
@@ -66,10 +68,20 @@ export default function DesktopIconGrid({ children = null }) {
         return tempIconGrid;
     }
 
-    // Use useEffect hook to interact with our dynamically created icon grid
+    // Swap 2 elements in the iconGrid array
+    function swapElements(index1, index2) {
+        let newIconGrid = [...iconGrid];
+        [newIconGrid[index1], newIconGrid[index2]] = [newIconGrid[index2], newIconGrid[index1]];
+    }
+
+    function handleDrop (ev, fromIndex, toIndex) {
+        ev.preventDefault();
+        swapElements(fromIndex, toIndex);
+    }
+
     useEffect(() => {
         const updateGridDimensions = () => {
-            if (iconGridRef.current) {
+            if (iconGridRef.current) { // iconGridRef.current is true when the component is loaded and ready
                 setColumnCount(getGridColumnCount());
                 setRowCount(getGridRowCount());
             }
@@ -78,13 +90,13 @@ export default function DesktopIconGrid({ children = null }) {
         updateGridDimensions(); // Set our component states to the initial grid values
         window.addEventListener('resize', updateGridDimensions); // Run updateGridDimensions when the window is resized
 
-        return () => { window.removeEventListener('resize', updateGridDimensions) }; // This piece of code is delayed to run on cleanup
+        return () => { window.removeEventListener('resize', updateGridDimensions) }; // This runs when the component is unmounted
     }, []);
 
     return (
         <div id="desktop-icon-grid" ref={iconGridRef}>
             { getIconGrid().map((icon, index) => (
-                (icon && <DesktopIconSlot index={index} >{icon}</DesktopIconSlot>) || <DesktopIconSlot index={index} />
+                (icon && <div draggable={false} key={index} className="desktop-icon-slot" >{icon}</div>) || <div draggable={false} key={index} className="desktop-icon-slot" ></div>
             ))}
         </div>
     );
