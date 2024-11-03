@@ -40,12 +40,10 @@
   margin-top: 7px;
 }
 
-.icon-drop-zone {
+.desktop-icon-slot {
   height: 100%;
   width: 100%;
   background-color: red;
 }
 
-#shop-icon {
-
-}
+/* #shop-icon {} */
